@@ -1,16 +1,12 @@
 
-require 'time'
+module HotelBooking
+  class DateRange
+    attr_reader :id, :start_day, :end_day
 
-require_relative 'hotel'
-require_relative 'reservation'
-
-
-class Range < Reservation
-
-    def intialize()
-        super(id, cost, start_day, end_day, status)
+    def intialize(id:, start_day:, end_day:)
+      @id = id
+      @start_day = start_day
+      @end_day = end_day
     end
-
-    # dates should not over lap
-
+  end
 end
