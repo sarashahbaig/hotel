@@ -2,11 +2,12 @@ require_relative "room"
 # require_relative "customer"
 require_relative "duration"
 require_relative "reservation"
+require_relative "date_range"
 
 module HotelBooking
   class Hotel
     TOTAL_ROOMS = 20
-    attr_reader :id, :rooms
+    attr_reader :id, :rooms, :reservations, :vacancy
     attr_accessor :customers
 
     def initialize(id:, name:)
@@ -37,26 +38,32 @@ module HotelBooking
     end
 
     def find_customer(id)
-      
       customer = @customers.find { |customer| customer.id == id }
       return customer
     end
 
     #list of rooms that are not reserverd
     def get_availbale_room()
-      
     end
 
     def get_reservation(date)
-      reservation = Reservation.new(id: 1, duration: date)
-      @reservations << reservation
+      reservation = @reservations.find { |res| res.start_date == date }
+      return reservation
     end
 
     def make_reservation(customer_id, room_number, start_date, end_date)
-      # binding.prye
-      duration = Duration.new(id: 1, start_date: start_date, end_date: end_date)
-      # duration = DateRange.new()
-      # reservation = Reservation.new(1, customer_id, room_number, duration)
+      # binding.pry
+      duration = Duration.new(
+        id: 1, start_date: start_date, end_date: end_date,
+      )
+      reservation = Reservation.new(
+        id: 1,
+        customer_id: customer_id,
+        room: nil,
+        duration: duration,
+      )
+
+      @reservations << reservation
     end
 
     def get_reservation_cost(id)

@@ -3,34 +3,35 @@ require "pry"
 
 module HotelBooking
   class Duration
-    attr_reader :id, :start_day, :end_day
+    attr_reader :id, :start_date, :end_date
 
-    def intialize(id, start_day, end_day)
+    def initialize(id:, start_date:, end_date:)
       @id = id
-      @start_day = convert_to_date(start_day)
-      @end_day = convert_to_date(end_day)
-      binding.pry
+      @start_date = convert_to_date(start_date)
+      @end_date = convert_to_date(end_date)
 
-      if @end_day <= @start_day
-        raise ArgumentError.new "Invaid dates provided"
-      end
+      # if @end_date <= @start_date
+      #   raise ArgumentError.new "Invaid dates provided"
+      # end
     end
 
     def convert_to_date(date_str)
       date_arr = date_str.split("-")
-      year = date_arr[0]
-      month = date_arr[1]
-      day = date_arr[2]
-      return Date.new(year, month, day)
+      # binding.pry
+      year = date_arr[0].to_i
+      month = date_arr[1].to_i
+      date = date_arr[2].to_i
+
+      return Date.new(year, month, date)
     end
 
     def get_duration()
-      duration = @end_day - @start_day
+      duration = @end_date - @start_date
       return duration
     end
 
     def overlap?(duration)
-      if @start_date <= duration.end_date && duration.@start_date <= @end_date
+      if @start_date <= duration.end_date && duration.start_date <= @end_date
         return false
       end
       return true
