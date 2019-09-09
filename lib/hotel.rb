@@ -47,14 +47,19 @@ module HotelBooking
     end
 
     def get_reservation(date)
-      reservation = @reservations.find { |res| res.start_date == date }
-      return reservation
+      reservations_for_date = []
+      @reservations.each do |res|
+        if date >= res.duration.start_date && date <= res.duration.end_date
+          reservations_for_date << res
+        end
+      end
+      # reservation = @reservations.find { |res| res.start_date == date }
+      return reservations_for_date
     end
 
     def make_reservation(customer_id, room_number, start_date, end_date)
-      # binding.pry
       duration = Duration.new(
-        id: 1, start_date: start_date, end_date: end_date,
+        start_date: start_date, end_date: end_date,
       )
       reservation = Reservation.new(
         id: 1,
@@ -62,14 +67,17 @@ module HotelBooking
         room: nil,
         duration: duration,
       )
-
       @reservations << reservation
     end
 
-    def get_reservation_cost(id)
+    def get_reservation_cost(res_index)
       # reservation_cost = Reservation.new(id: 1, cost:)
-      reservation = find_reservation(id)
-      return reservation.total_cost
+      res = @reservations[res_index]
+      total_cost = 0
+      if res != nil
+        total_cost = res.get_total_cost()
+      end
+      return total_cost
     end
   end
 end
