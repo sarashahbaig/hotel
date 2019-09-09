@@ -1,18 +1,18 @@
 module HotelBooking
   class Reservation
     COST_PER_NIGHT = 200
-    attr_reader :id, :customer_id, :room, :duration, :total_cost
+    attr_reader :id, :customer_id, :room, :duration, :cost_per_night
 
-    def initialize(id:, customer_id:, room:, duration:, total_cost: COST_PER_NIGHT)
+    def initialize(id:, customer_id:, room:, duration:, cost_per_night: COST_PER_NIGHT)
       @id = id
       @customer_id = customer_id
       @room = room
-      @total_cost = total_cost
+      @cost_per_night = cost_per_night
       @duration = duration
     end
 
-    def total_cost()
-      total_cost = @duration * COST_PER_NIGHT
+    def get_total_cost()
+      total_cost = @duration.get_nights() * @cost_per_night
       return total_cost
     end
   end
