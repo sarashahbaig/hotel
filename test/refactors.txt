@@ -1,0 +1,8 @@
+refactors.txt Requirement
+In my of design, I encountered was figuring out how many classes 
+I need to represent the objects that make up the hotel system. 
+I was not sure what to track for the hotel system and what not to. 
+For instance, I initially came up with multiple classes but then had 
+to narrow it down. I ended up having a customer and room class just to 
+be able to better track reservations.
+and i need to work on my test cases more.
