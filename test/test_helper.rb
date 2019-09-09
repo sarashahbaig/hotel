@@ -2,15 +2,16 @@
 require "minitest"
 require "minitest/autorun"
 require "minitest/reporters"
+require "minitest/skip_dsl"
+
+require "date"
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
-# require_relative your lib files here!
-require_relative "../lib/hotel"
-
-describe "hotel test" do
-    it "testing" do
-        hotel = Hotel.new(1, "name")
-        expect(hotel.id).must_equal 1
-    end
-end
+# Require_relative your lib files here!
+require_relative "../lib/hotel.rb"
+require_relative "../lib/reservation.rb"
+require_relative "../lib/date_range.rb"
+require_relative "../lib/room.rb"
+require_relative "../lib/customer.rb"
+require_relative "../lib/duration.rb"

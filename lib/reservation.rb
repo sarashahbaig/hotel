@@ -1,21 +1,19 @@
-class Reservation < Hotel
-    attr_reader :id, :cost, :start_day, :end_day, :status
+module HotelBooking
+  class Reservation
+    COST_PER_NIGHT = 200
+    attr_reader :id, :customer_id, :room, :duration, :cost_per_night
 
-    def initialize(id, cost, start_day, end_day, status)
-        super(id, rooms)
-        @cost = cost
-        @start_day = start_day
-        @end_day = end_day
-        @status = status
+    def initialize(id:, customer_id:, room:, duration:, cost_per_night: COST_PER_NIGHT)
+      @id = id
+      @customer_id = customer_id
+      @room = room
+      @cost_per_night = cost_per_night
+      @duration = duration
     end
 
- invalid reservation (end day can not be start day)  
- it will have a start day and a end_day(get the range of the reservation of the room)
-
-
-
- it will have a cost($200/night)
- it will have list of rooms( numbered from 1 - 20)
- status 
-
+    def get_total_cost()
+      total_cost = @duration.get_nights() * @cost_per_night
+      return total_cost
+    end
+  end
 end
