@@ -82,5 +82,31 @@ describe HotelBooking::Hotel do
       total_cost = @hotel.get_reservation_cost(0)
       expect(total_cost).must_equal 800
     end
+
+    describe "Wave 2" do
+      it "get a list of rooms that are not reserved" do
+        date = Date.new(2019, 9, 2)
+        available_rooms = @hotel.get_availbale_rooms(date)
+        expect(available_rooms.length).must_equal 20
+        cust_id = @customer.id
+        @hotel.make_reservation(cust_id, "2019-09-01", "2019-09-05")
+        available_rooms = @hotel.get_availbale_rooms(date)
+        expect(available_rooms.length).must_equal 19
+      end
+
+      it "reserve a room on a given date " do
+        cust_id = @customer.id
+        @hotel.reserve_room_on(cust_id, 1, "2019-09-01", "2019-09-05")
+        total_reservations = @hotel.reservations.length
+        expect(total_reservations).must_equal 1
+      end
+      it "reserve an already reserve room" do
+        cust_id = @customer.id
+        @hotel.make_reservation(cust_id, "2019-09-01", "2019-09-05")
+        expect {
+          @hotel.reserve_room_on(cust_id, 1, "2019-09-01", "2019-09-05")
+        }.must_raise ArgumentError
+      end
+    end
   end
 end

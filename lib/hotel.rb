@@ -43,7 +43,10 @@ module HotelBooking
     end
 
     #list of rooms that are not reserverd
-    def get_availbale_room()
+    def get_availbale_rooms(date)
+      available_rooms = @rooms.find_all { |room| room.availability == true }
+      # rooms_date_range = available_rooms.find_all { |room| (date >= room.reservation.duration.start_date && date <= room.reservation.duration.end_date) }
+      return available_rooms
     end
 
     def get_reservation(date)
@@ -61,7 +64,6 @@ module HotelBooking
       room_to_reserve = @rooms.find { |room| room.availability }
 
       room_index = @rooms.find_index(room_to_reserve)
-      @rooms[room_index].availability = false
 
       duration = Duration.new(
         start_date: start_date, end_date: end_date,
@@ -72,6 +74,9 @@ module HotelBooking
         room: room_index,
         duration: duration,
       )
+      room_to_reserve.availability = false
+      room_to_reserve.reservation = reservation
+      @rooms[room_index] = room_to_reserve
       @reservations << reservation
     end
 
@@ -83,6 +88,14 @@ module HotelBooking
         total_cost = res.get_total_cost()
       end
       return total_cost
+    end
+
+    def reserve_room_on(cust_id, room_number, start_date, end_date)
+      room = @rooms.find { |room| room.number == room_number }
+      if room.availability == false || room.reservation != nil
+        raise ArgumentError.new "This room is already reserved"
+      end
+      make_reservation(cust_id, start_date, end_date)
     end
   end
 end
