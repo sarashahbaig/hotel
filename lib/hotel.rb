@@ -57,14 +57,19 @@ module HotelBooking
       return reservations_for_date
     end
 
-    def make_reservation(customer_id, room_number, start_date, end_date)
+    def make_reservation(customer_id, start_date, end_date)
+      room_to_reserve = @rooms.find { |room| room.availability }
+
+      room_index = @rooms.find_index(room_to_reserve)
+      @rooms[room_index].availability = false
+
       duration = Duration.new(
         start_date: start_date, end_date: end_date,
       )
       reservation = Reservation.new(
         id: 1,
         customer_id: customer_id,
-        room: nil,
+        room: room_index,
         duration: duration,
       )
       @reservations << reservation

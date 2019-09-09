@@ -5,7 +5,7 @@ describe HotelBooking::Duration do
     it "raise exception when an invalid date range is provided" do
       expect {
         HotelBooking::Duration.new(
-          start_date: "2019-01-01",
+          start_date: "2019-02-01",
           end_date: "2019-01-01",
         )
       }.must_raise ArgumentError

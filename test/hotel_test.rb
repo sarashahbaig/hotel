@@ -51,7 +51,7 @@ describe HotelBooking::Hotel do
     describe "make reservation" do
       it "make a reservation of a room for a given date range" do
         cust_id = @customer.id
-        @hotel.make_reservation(cust_id, 10, "2019-09-01", "2019-09-05")
+        @hotel.make_reservation(cust_id, "2019-09-01", "2019-09-05")
         expect(@reservation_list.length).must_equal 1
       end
     end
@@ -59,10 +59,10 @@ describe HotelBooking::Hotel do
     describe "get reservation" do
       before do
         cust_id = @customer.id
-        @hotel.make_reservation(cust_id, 10, "2019-01-01", "2019-01-05")
-        @hotel.make_reservation(cust_id, 10, "2019-02-01", "2019-02-05")
-        @hotel.make_reservation(cust_id, 10, "2019-03-01", "2019-03-05")
-        @hotel.make_reservation(cust_id, 10, "2019-04-01", "2019-03-05")
+        @hotel.make_reservation(cust_id, "2019-01-01", "2019-01-05")
+        @hotel.make_reservation(cust_id, "2019-02-01", "2019-02-05")
+        @hotel.make_reservation(cust_id, "2019-03-01", "2019-03-05")
+        @hotel.make_reservation(cust_id, "2019-04-01", "2019-04-05")
       end
       it "access the list of reservations for a specific date, so that I can track reservations by date" do
         date = Date.new(2019, 3, 2)
@@ -74,7 +74,8 @@ describe HotelBooking::Hotel do
 
     it "get the total cost for a given reservation" do
       cust_id = @customer.id
-      @hotel.make_reservation(cust_id, 1, "2019-09-01", "2019-09-05")
+      @hotel.make_reservation(cust_id, "2019-09-01", "2019-09-05")
+      @hotel.make_reservation(cust_id, "2019-09-01", "2019-09-05")
       reservation_list = @hotel.reservations
       expect(reservation_list).must_be_kind_of Array
 
